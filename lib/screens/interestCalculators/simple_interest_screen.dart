@@ -1,8 +1,6 @@
 import 'package:financialcalc/database/db_helper.dart';
 import 'package:financialcalc/screens/history/history_page.dart';
 import 'package:flutter/material.dart';
-
-
 import '../../models/calculation.dart';
 
 class SimpleInterestScreen extends StatefulWidget {
@@ -13,194 +11,214 @@ class SimpleInterestScreen extends StatefulWidget {
 }
 
 class _SimpleInterestScreenState extends State<SimpleInterestScreen> {
-
-
-
   final TextEditingController _principalController = TextEditingController();
   final TextEditingController _rateController = TextEditingController();
   final TextEditingController _timeController = TextEditingController();
 
-
   double? _simpleInterest;
   double? _totalAmount;
 
-  void _calculateInterest() {
-    final double principal = double.tryParse(_principalController.text) ?? 0;
-    final double rate = double.tryParse(_rateController.text) ?? 0;
-    final double time = double.tryParse(_timeController.text) ?? 0;
-
-    final double si = (principal * rate * time) / 100;
-    final double total = principal + si;
-
-    setState(() {
-      _simpleInterest = si;
-      _totalAmount = total;
-    });
-  }
-
   @override
-  void initState(){
+  void initState() {
     super.initState();
-
     _principalController.addListener(_onTextChanged);
     _rateController.addListener(_onTextChanged);
     _timeController.addListener(_onTextChanged);
-
   }
 
-  // Future<void> saveSimpleInterest(double principal, double rate, double time, double si, double amount) async{
-  //   await DBHelper().insertData(
-  //       InterestData(principal: principal,
-  //         rate : rate,
-  //         time : time,
-  //         result : si,
-  //         amount : amount,
-  //         type: 'SI'
-  //       )
-  //   );
-  // }
-
-  void _onTextChanged() async{
+  void _onTextChanged() async {
     final principalText = _principalController.text;
     final rateText = _rateController.text;
     final timeText = _timeController.text;
 
-    if (principalText.isNotEmpty && rateText.isNotEmpty && timeText.isNotEmpty){
+    if (principalText.isNotEmpty &&
+        rateText.isNotEmpty &&
+        timeText.isNotEmpty) {
       final principal = double.tryParse(principalText);
       final rate = double.tryParse(rateText);
       final time = double.tryParse(timeText);
 
-      if (principal != null && rate != null && time != null){
+      if (principal != null && rate != null && time != null) {
         final si = (principal * rate * time) / 100;
         final amount = principal + si;
 
         setState(() {
           _simpleInterest = si;
-          _totalAmount =  amount;//si + principal;
+          _totalAmount = amount;
         });
 
         await DBHelper.instance.insertData(
-            InterestData.fromMap({
-              'principal': principal,
-              'rate': rate,
-              'time': time,
-              'result': si,
-              'amount': amount,
-              "type": "SI"}
-            )
+          InterestData.fromMap({
+            'principal': principal,
+            'rate': rate,
+            'time': time,
+            'result': si,
+            'amount': amount,
+            "type": "SI"
+          }),
         );
-
-        // saveSimpleInterest(principal, rate, time,si, amount );
       }
     }
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xfff3f6fa),
+      backgroundColor: const Color(0xfff7f8fc),
       appBar: AppBar(
-        title: const Text('Simple Interest Calculator'),
-        backgroundColor: const Color(0xff1976d2),
-        elevation: 3,
-
+        backgroundColor: Colors.white,
+        elevation: 1,
+        centerTitle: true,
+        title: const Text(
+          "Simple Interest",
+          style: TextStyle(
+              color: Color(0xff1a1a1a),
+              fontWeight: FontWeight.bold,
+              fontSize: 22),
+        ),
         actions: [
-          IconButton(onPressed: (){
-
-            Navigator.push(context, 
-            MaterialPageRoute(builder: (context)=> HistoryPage())
-            );
-          }, icon: Icon(Icons.history))
+          IconButton(
+            icon: const Icon(Icons.history, color: Color(0xff1a1a1a)),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (_) => HistoryPage()),
+              );
+            },
+          )
         ],
       ),
+      resizeToAvoidBottomInset: true,
       body: SingleChildScrollView(
-        padding: const EdgeInsets.all(20),
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
+            // Input Card
             Card(
-              elevation: 4,
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20)),
+              elevation: 5,
               child: Padding(
-                padding: const EdgeInsets.all(20),
+                padding:
+                const EdgeInsets.symmetric(horizontal: 20, vertical: 30),
                 child: Column(
                   children: [
-                    TextField(
-                      controller: _principalController,
-                      keyboardType: TextInputType.number,
-                      decoration: const InputDecoration(
-                        labelText: 'Principal Amount (₹)',
-                        border: OutlineInputBorder(),
-                        prefixIcon: Icon(Icons.account_balance_wallet_outlined),
-                      ),
-                    ),
-                    const SizedBox(height: 16),
-                    TextField(
-                      controller: _rateController,
-                      keyboardType: TextInputType.number,
-                      decoration: const InputDecoration(
-                        labelText: 'Rate of Interest (%)',
-                        border: OutlineInputBorder(),
-                        prefixIcon: Icon(Icons.percent),
-                      ),
-                    ),
-                    const SizedBox(height: 16),
-                    TextField(
-                      controller: _timeController,
-                      keyboardType: TextInputType.number,
-                      decoration: const InputDecoration(
-                        labelText: 'Time (Years)',
-                        border: OutlineInputBorder(),
-                        prefixIcon: Icon(Icons.access_time),
-                      ),
-                    ),
-                    const SizedBox(height: 24),
-
-
-                    // SizedBox(
-                    //   width: double.infinity,
-                    //   child: ElevatedButton(
-                    //     onPressed: _calculateInterest,
-                    //     style: ElevatedButton.styleFrom(
-                    //       backgroundColor: const Color(0xff1976d2),
-                    //       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-                    //       padding: const EdgeInsets.symmetric(vertical: 14),
-                    //     ),
-                    //     child: const Text(
-                    //       'Calculate',
-                    //       style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),
-                    //     ),
-                    //   ),
-                    // ),
+                    _buildTextField(
+                        controller: _principalController,
+                        label: "Principal Amount",
+                        hint: "Enter principal in ₹",
+                        icon: Icons.account_balance_wallet_rounded),
+                    const SizedBox(height: 20),
+                    _buildTextField(
+                        controller: _rateController,
+                        label: "Rate of Interest",
+                        hint: "Enter rate (%)",
+                        icon: Icons.percent_rounded),
+                    const SizedBox(height: 20),
+                    _buildTextField(
+                        controller: _timeController,
+                        label: "Time Period",
+                        hint: "Enter time in years",
+                        icon: Icons.schedule_rounded),
                   ],
                 ),
               ),
             ),
             const SizedBox(height: 24),
-            if (_simpleInterest != null)
-              Card(
-                color: Colors.white,
-                elevation: 3,
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
-                child: Padding(
-                  padding: const EdgeInsets.all(20),
-                  child: Column(
-                    children: [
-                      Text(
-                        'Simple Interest: ₹${_simpleInterest!.toStringAsFixed(2)}',
-                        style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.black87),
-                      ),
-                      const SizedBox(height: 8),
-                      Text(
-                        'Total Amount: ₹${_totalAmount!.toStringAsFixed(2)}',
-                        style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w500, color: Colors.black54),
-                      ),
-                    ],
-                  ),
-                ),
+
+            // Result Card
+            _simpleInterest != null
+                ? Container(
+              width: double.infinity,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(20),
+                gradient: const LinearGradient(
+                    colors: [Color(0xff42a5f5), Color(0xff1976d2)]),
+                boxShadow: const [
+                  BoxShadow(
+                      color: Colors.black26,
+                      blurRadius: 8,
+                      offset: Offset(0, 4))
+                ],
               ),
+              padding: const EdgeInsets.all(24),
+              child: Column(
+                children: [
+                  Text(
+                    "Simple Interest",
+                    style: TextStyle(
+                        color: Colors.white.withOpacity(0.9),
+                        fontSize: 16,
+                        fontWeight: FontWeight.w500),
+                  ),
+                  const SizedBox(height: 8),
+                  Text(
+                    "₹${_simpleInterest!.toStringAsFixed(2)}",
+                    style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 28,
+                        fontWeight: FontWeight.bold),
+                  ),
+                  const SizedBox(height: 24),
+                  Text(
+                    "Total Amount",
+                    style: TextStyle(
+                        color: Colors.white.withOpacity(0.9),
+                        fontSize: 16,
+                        fontWeight: FontWeight.w500),
+                  ),
+                  const SizedBox(height: 8),
+                  Text(
+                    "₹${_totalAmount!.toStringAsFixed(2)}",
+                    style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 28,
+                        fontWeight: FontWeight.bold),
+                  ),
+                ],
+              ),
+            )
+                : Center(
+              child: Column(
+                children: const [
+                  Icon(Icons.show_chart_rounded,
+                      size: 80, color: Colors.grey),
+                  SizedBox(height: 16),
+                  Text(
+                    "Enter values to calculate",
+                    style: TextStyle(
+                        color: Colors.grey,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w500),
+                  ),
+                ],
+              ),
+            ),
           ],
         ),
+      ),
+    );
+  }
+
+  Widget _buildTextField(
+      {required TextEditingController controller,
+        required String label,
+        required String hint,
+        required IconData icon}) {
+    return TextField(
+      controller: controller,
+      keyboardType: TextInputType.number,
+      decoration: InputDecoration(
+        labelText: label,
+        hintText: hint,
+        prefixIcon: Icon(icon, color: const Color(0xff1976d2)),
+        filled: true,
+        fillColor: Colors.white,
+        border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(14), borderSide: BorderSide.none),
+        contentPadding:
+        const EdgeInsets.symmetric(horizontal: 20, vertical: 18),
       ),
     );
   }

@@ -42,7 +42,9 @@ class _HistoryPageState extends State<HistoryPage> {
 
       Column(
         children: [
-          ElevatedButton.icon(onPressed: (){}, icon: Icon(Icons.delete, color: Colors.red,), label: Text("Clear All"),),
+          ElevatedButton.icon(onPressed: (){
+            _deleteAll();
+          }, icon: Icon(Icons.delete, color: Colors.red,), label: Text("Clear All"),),
           Expanded(
             child: ListView.builder(
             itemCount: history.length,
