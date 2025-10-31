@@ -63,15 +63,16 @@ class _SIPSummaryCardState extends State<SIPSummaryCard> {
                   children: [
 
                     // TODO : Add a good animated Switch effect. (lift weight not heavy).
-                   isExact?
+                   // isExact?
                     const Text(
                       "Exact",
                       style: TextStyle(color: Colors.teal, fontSize: 12),
-                    ):const Text(
-                     "Approx",
-                     style: TextStyle(color: Colors.teal, fontSize: 12),
-                   ),
-                    const SizedBox(width: 4,),
+                    )
+                   //      :const Text(
+                   //   "Approx",
+                   //   style: TextStyle(color: Colors.teal, fontSize: 12),
+                   // ),
+                    ,const SizedBox(width: 4,),
                     Switch(value: isExact, onChanged: (bool newValue){
                       setState(() {
                         isExact = newValue;

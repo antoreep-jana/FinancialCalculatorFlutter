@@ -1,5 +1,9 @@
-import 'package:financialcalc/screens/investmentTools/sip_calculator.dart';
+// import 'package:financialcalc/screens/investmentTools/lumpsum_calculator.dart';
+// import 'package:financialcalc/screens/investmentTools/sip_calculator.dart';
 import 'package:flutter/material.dart';
+
+import 'lumpsum_calculator.dart';
+import 'sip_calculator.dart';
 
 class InvestmentToolsPage extends StatelessWidget {
   const InvestmentToolsPage({super.key});
@@ -19,7 +23,10 @@ class InvestmentToolsPage extends StatelessWidget {
         'title': 'Lumpsum Calculator',
         'description': 'Estimate future value of a one-time investment.',
         'icon': Icons.savings_outlined,
-        'onTap': () {}, // Placeholder for future
+        'onTap': () {
+          Navigator.of(context).push(MaterialPageRoute(builder: (context) => LumpSumInvestmentPage()));
+
+        }, // Placeholder for future
       },
       {
         'title': 'Goal Calculator',

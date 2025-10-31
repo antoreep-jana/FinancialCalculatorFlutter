@@ -1,9 +1,11 @@
-import 'package:financialcalc/screens/investmentTools/SIP_Calculator_UTILS/sip_summary.dart';
+// import 'package:financialcalc/screens/investmentTools/widgets/sip_summary_card.dart';
+import 'package:financial_calculator/screens/investmentTools/widgets/sip_summary_card.dart';
 import 'package:flutter/material.dart';
 import 'dart:math';
 import 'package:intl/intl.dart';
 
 import 'package:flutter/services.dart';
+
 
 class SipCalculator extends StatefulWidget {
   const SipCalculator({super.key});
@@ -107,48 +109,7 @@ class _SipCalculatorState extends State<SipCalculator> {
                 // Result Card
                 if (futureValue> 0)
                   SIPSummaryCard(totalInvested: totalInvested, estimatedReturns: estimatedReturns, futureValue: futureValue,)
-                  // Card(
-                  //   color: Colors.teal.shade50,
-                  //   shape: RoundedRectangleBorder(
-                  //     borderRadius: BorderRadius.circular(16)
-                  //   ),
-                  //   elevation: 4,
-                  //   child: Padding(
-                  //     padding: const EdgeInsets.all(16.0),
-                  //     child: Column(
-                  //       children: [
-                  //         const Text("SIP Summary",
-                  //         style: TextStyle(
-                  //           fontSize : 10,
-                  //           fontWeight : FontWeight.bold,
-                  //           color : Colors.teal
-                  //         ),
-                  //         ),
-                  //         const Divider(),
-                  //         ListTile(
-                  //           leading: const Icon(Icons.account_balance_wallet,
-                  //           color: Colors.teal
-                  //           ),
-                  //           title: const Text("Total Invested"),
-                  //           trailing: Text("₹${formatLargeNumber(totalInvested)}"),
-                  //         ),
-                  //         ListTile(
-                  //           leading: const Icon(Icons.trending_up,
-                  //           color: Colors.green
-                  //           ),
-                  //           title: const Text("Estimated Returns"),
-                  //           trailing: Text("₹${formatLargeNumber(estimatedReturns)}"),
-                  //         ),
-                  //         ListTile(
-                  //           leading: const Icon(Icons.savings, color: Colors.blue,),
-                  //           title: const Text("Future Value"),
-                  //           trailing: Text("₹${formatLargeNumber(futureValue)}"),
-                  //         )
-                  //       ],
-                  //     )
-                  //   )
-                  //
-                  // )
+
               ],
             ),
           )

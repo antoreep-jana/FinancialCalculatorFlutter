@@ -1,4 +1,4 @@
-name: financialcalc
+name: financial_calculator
 description: "A modern Financial Calculator App"
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
@@ -31,6 +31,8 @@ dependencies:
   flutter:
     sdk: flutter
 
+
+
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.8
@@ -38,11 +40,16 @@ dependencies:
   path_provider: ^2.1.5
   path: ^1.9.1
   intl: ^0.20.2
+  flutter_launcher_icons: ^0.14.4
 
 
 
+flutter_launcher_icons:
+  android: true
+  ios: true
+  image_path: "assets/icons/app_icon.jpeg"
 
-dev_dependencies:
+
   flutter_test:
     sdk: flutter
 
@@ -63,6 +70,9 @@ flutter:
   # included with your application, so that you can use the icons in
   # the material Icons class.
   uses-material-design: true
+
+  assets:
+    - assets/icons/app_icon.jpeg
 
   # To add assets to your application, add an assets section, like this:
   # assets:

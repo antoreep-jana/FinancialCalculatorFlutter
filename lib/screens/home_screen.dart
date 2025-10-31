@@ -1,9 +1,13 @@
-import 'package:financialcalc/screens/history/history_page.dart';
-import 'package:financialcalc/screens/investmentTools/investment_tools_page.dart';
+// import 'package:financialcalc/screens/history/history_page.dart';
+// import 'package:financialcalc/screens/investmentTools/investment_tools_page.dart';
+
+import 'package:financial_calculator/screens/settings/settings.dart';
 import 'package:flutter/material.dart';
 import 'FeeTaxAnalyzers/fee_tax_analyzer_page.dart';
 import 'LoanCalculators/loan_calculators_page.dart';
+import 'history/history_page.dart';
 import 'interestCalculators/interest_calculators_page.dart';
+import 'investmentTools/investment_tools_page.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -222,15 +226,70 @@ class HistoryTab extends StatelessWidget {
   }
 }
 
+// class ProfileTab extends StatelessWidget {
+//   const ProfileTab({super.key});
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return const Center(
+//       child: Text(
+//         'Profile Page',
+//         style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+//       ),
+//     );
+//   }
+// }
+
+// WORKS
+// class ProfileTab extends StatelessWidget {
+//   const ProfileTab({super.key});
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return SettingsPage();
+//   }
+// }
+
 class ProfileTab extends StatelessWidget {
   const ProfileTab({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return const Center(
-      child: Text(
-        'Profile Page',
-        style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+    return Scaffold(
+      // appBar: AppBar(
+      //   title: const Text('Profile Settings'),
+      // ),
+      body: SingleChildScrollView(  // Ensuring the content is scrollable
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            // Profile section
+            Text(
+              "Profile",
+              style: TextStyle(
+                fontSize: 25,
+                fontWeight: FontWeight.bold,
+                color: Colors.black,
+              ),
+            ),
+            const SizedBox(height: 16),
+
+            // Settings section title
+            Text(
+              "Settings",
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.w600,
+                color: Colors.grey[800],
+              ),
+            ),
+            const SizedBox(height: 8),
+
+            // Embedding the SettingsPage widget
+             SettingsPage(),  // Embed the settings page
+          ],
+        ),
       ),
     );
   }

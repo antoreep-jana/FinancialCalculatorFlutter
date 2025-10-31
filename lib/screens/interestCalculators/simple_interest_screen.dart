@@ -1,7 +1,9 @@
-import 'package:financialcalc/database/db_helper.dart';
-import 'package:financialcalc/screens/history/history_page.dart';
+// import 'package:financialcalc/database/db_helper.dart';
+// import 'package:financialcalc/screens/history/history_page.dart';
 import 'package:flutter/material.dart';
+import '../../database/db_helper.dart';
 import '../../models/calculation.dart';
+import '../history/history_page.dart';
 
 class SimpleInterestScreen extends StatefulWidget {
   const SimpleInterestScreen({super.key});
