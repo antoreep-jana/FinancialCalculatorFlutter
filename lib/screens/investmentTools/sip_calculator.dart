@@ -5,6 +5,7 @@ import 'dart:math';
 import 'package:intl/intl.dart';
 
 import 'package:flutter/services.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 
 class SipCalculator extends StatefulWidget {
@@ -22,19 +23,60 @@ class _SipCalculatorState extends State<SipCalculator> {
   double futureValue = 0.0;
   double totalInvested = 0.0;
   double estimatedReturns = 0.0;
+  String currencySymbol = "₹";  // Default to Rupee sign
+
+  @override
+  void initState(){
+    super.initState();
+    _loadCurrencySymbol();
+  }
+
+  // Load Currency symbol from shared preferences
+  _loadCurrencySymbol() async{
+    final prefs = await SharedPreferences.getInstance();
+    setState(() {
+      currencySymbol = prefs.getString("currencySymbol") ?? "₹";  // Default to Rupee sign"
+    });
+  }
 
   String formatLargeNumber(double value){
     // format large numbers with suffixes K, M, B
-    if (value >= 10000000) {
-      return "${(value / 10000000).toStringAsFixed(1)}Cr";  // Millions
-    } else if (value >= 100000) {
-      return "${(value / 100000).toStringAsFixed(1)}L";  // Lakhs
-    } else if (value >= 1000) {
-      return "${(value / 1000).toStringAsFixed(1)}K";  // Thousands
-    } else {
-      return value.toStringAsFixed(2);
+
+    // Check if the currency system is INR
+    if (currencySymbol == "₹") {
+      if (value >= 10000000) {
+        return "${(value / 10000000).toStringAsFixed(1)}Cr"; // Millions
+      } else if (value >= 100000) {
+        return "${(value / 100000).toStringAsFixed(1)}L"; // Lakhs
+      } else if (value >= 1000) {
+        return "${(value / 1000).toStringAsFixed(1)}K"; // Thousands
+      } else {
+        return value.toStringAsFixed(2);
+      }
     }
+    // Else the american system of currency
+    else{
+      if(value >= 1000000000){
+        return "${(value / 1000000000).toStringAsFixed(2)}B"; // Billions
+      }else if (value >= 1000000){
+        return "${(value / 1000000).toStringAsFixed(2)}M"; // Millions
+      }else if (value >= 1000){
+        return "${(value / 1000).toStringAsFixed(2)}K"; // Thousands
+      }else{
+        return value.toStringAsFixed(2);
+      }
+    }
+
   }
+
+  final Map<String, Icon> icons = {
+    "₹": Icon(Icons.currency_rupee),
+    "\$": Icon(Icons.attach_money),
+    "€": Icon(Icons.euro),
+    "¥": Icon(Icons.monetization_on), // Japanese Yen
+    "£": Icon(Icons.currency_pound), // British Pound (requires specific icon)
+  };
+
 
   void calculateSIP() {
     final double? amount = double.tryParse(amountController.text);
@@ -74,12 +116,12 @@ class _SipCalculatorState extends State<SipCalculator> {
                 TextField(
                   controller: amountController,
                   keyboardType: TextInputType.number,
-                  decoration: const InputDecoration(
-                    labelText: "Monthly Investment (₹)",
+                  decoration:  InputDecoration(
+                    labelText: "Monthly Investment (${currencySymbol})",
                     border: OutlineInputBorder(),
-                    prefixIcon: Icon(Icons.currency_rupee)
+                    prefixIcon: icons[currencySymbol]//Icon()
                   ),
-                  onEditingComplete: calculateSIP,
+                  // onEditingComplete: calculateSIP,
                 ),
                 const SizedBox(height: 12,),
                 TextField(
@@ -90,7 +132,7 @@ class _SipCalculatorState extends State<SipCalculator> {
                     border: OutlineInputBorder(),
                     prefixIcon: Icon(Icons.percent)
                   ),
-                  onEditingComplete: calculateSIP,
+                  // onEditingComplete: calculateSIP,
                 ),
                 const SizedBox(height: 12,),
                 TextField(
@@ -101,7 +143,7 @@ class _SipCalculatorState extends State<SipCalculator> {
                     border: OutlineInputBorder(),
                     prefixIcon: Icon(Icons.calendar_today)
                   ),
-                  onEditingComplete: calculateSIP
+                  // onEditingComplete: calculateSIP
                 ),
                 const SizedBox(height: 20,),
 

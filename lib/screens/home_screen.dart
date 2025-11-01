@@ -1,6 +1,7 @@
 // import 'package:financialcalc/screens/history/history_page.dart';
 // import 'package:financialcalc/screens/investmentTools/investment_tools_page.dart';
 
+import 'package:financial_calculator/screens/settings/backup_sync.dart';
 import 'package:financial_calculator/screens/settings/settings.dart';
 import 'package:flutter/material.dart';
 import 'FeeTaxAnalyzers/fee_tax_analyzer_page.dart';
@@ -97,7 +98,7 @@ class HomeTab extends StatelessWidget {
       {
         'title': 'Investment Tools',
         'icon': Icons.trending_up_rounded,
-        'subItems': ['SIP Calculator', 'Retirement Planner'],
+        'subItems': ['SIP Calculator', 'Lumpsum Calculator','Retirement Planner', "SWP Calculator"],
         'page': InvestmentToolsPage()
       },
       {
@@ -253,8 +254,12 @@ class HistoryTab extends StatelessWidget {
 class ProfileTab extends StatelessWidget {
   const ProfileTab({super.key});
 
+
+
   @override
   Widget build(BuildContext context) {
+    bool syncValue = true;
+
     return Scaffold(
       // appBar: AppBar(
       //   title: const Text('Profile Settings'),
@@ -288,6 +293,21 @@ class ProfileTab extends StatelessWidget {
 
             // Embedding the SettingsPage widget
              SettingsPage(),  // Embed the settings page
+
+            // Backup Page.
+            const SizedBox(height: 8,),
+            // Settings section title
+            Text(
+              "Backup & Syncing",
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.w600,
+                color: Colors.grey[800],
+              ),
+            ),
+            // Backup & Syncing Options
+
+            BackupAndSync()
           ],
         ),
       ),

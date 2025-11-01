@@ -1,5 +1,6 @@
 // import 'package:financialcalc/screens/investmentTools/lumpsum_calculator.dart';
 // import 'package:financialcalc/screens/investmentTools/sip_calculator.dart';
+import 'package:financial_calculator/screens/investmentTools/swp_calculator.dart';
 import 'package:flutter/material.dart';
 
 import 'lumpsum_calculator.dart';
@@ -34,14 +35,30 @@ class InvestmentToolsPage extends StatelessWidget {
         'icon': Icons.flag_outlined,
         'onTap': () {}, // Placeholder for future
       },
+      {
+        "title" : "SWP Calculator",
+        "description" : "Calculate the monthly withdrawals from your investments through Systematic Withdrawl Plans (SWP)",
+        "icon" :
+          Icons.monetization_on, // A simple money icon
+          // size: 30, // Set size of the icon
+          // color: Colors.blue, // Set the color of the icon
+
+        "onTap" : (){
+          Navigator.of(context).push(MaterialPageRoute(builder: (context) => SWPCalculator()));
+        }
+      }
     ];
 
     return Scaffold(
       backgroundColor: const Color(0xfff3f6fa),
       appBar: AppBar(
-        title: const Text('Investment Tools'),
+        title: const Text('Investment Tools',
+        style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+        ),
         backgroundColor: const Color(0xff1976d2),
         elevation: 3,
+        shadowColor: Colors.lightBlueAccent,
+
       ),
       body: ListView.builder(
         padding: const EdgeInsets.all(16),
