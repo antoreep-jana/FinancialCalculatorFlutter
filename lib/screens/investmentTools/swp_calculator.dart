@@ -12,6 +12,8 @@ class _SWPCalculatorState extends State<SWPCalculator> {
   final TextEditingController periodController = TextEditingController();
 
   bool showDetailedResults = false;
+  String selectedCurrency = 'USD'; // Currency selection
+  List<String> currencies = ['USD', 'EUR', 'INR', 'GBP'];
 
   double lumpsum = 0;
   double rateOfReturn = 0;
@@ -58,9 +60,54 @@ class _SWPCalculatorState extends State<SWPCalculator> {
     return Scaffold(
       backgroundColor: Colors.blue[50], // Soft Blue background
       appBar: AppBar(
-        title: Text('SWP Calculator', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),),
-        backgroundColor: Colors.blue[800], // Deep blue for the AppBar
+        title: Text(
+          'SWP Calculator',
+          style: TextStyle(
+            fontSize: 22,
+            fontWeight: FontWeight.bold,
+            letterSpacing: 1.2,
+            color: Colors.white,
+          ),
+        ),
+        backgroundColor: Colors.blue[900], // Deep blue for the AppBar
+        elevation: 8.0, // Adding shadow for prominence
         centerTitle: true,
+        actions: [
+          // Currency dropdown or icon button
+          PopupMenuButton<String>(
+            onSelected: (currency) {
+              setState(() {
+                selectedCurrency = currency;
+              });
+            },
+            icon: Icon(
+              Icons.currency_exchange,
+              color: Colors.white,
+            ),
+            itemBuilder: (BuildContext context) {
+              return currencies.map((String currency) {
+                return PopupMenuItem<String>(
+                  value: currency,
+                  child: Text(currency),
+                );
+              }).toList();
+            },
+          ),
+          SizedBox(width: 16), // Space between the buttons
+          IconButton(
+            icon: Icon(
+              Icons.history,
+              color: Colors.white,
+            ),
+            onPressed: () {
+              // Navigate to History page (to be implemented)
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => HistoryPage()),
+              );
+            },
+          ),
+        ],
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -107,22 +154,17 @@ class _SWPCalculatorState extends State<SWPCalculator> {
 
                   // Calculate Button
                   ElevatedButton(
-
                     onPressed: calculateSWP,
-                    child: Text('Calculate SWP',
-                    style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 16),
-                    ),
+                    child: Text('Calculate SWP'),
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.blue[200], // Light Blue button
+                      backgroundColor: Colors.blue[600], // Light Blue button
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(12),
                       ),
-                      // padding: EdgeInsets.symmetric(vertical: 14),
-                      padding: EdgeInsets.all(16),
+                      padding: EdgeInsets.symmetric(vertical: 14),
                       textStyle: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
-
                       ),
                     ),
                   ),
@@ -256,6 +298,22 @@ class _SWPCalculatorState extends State<SWPCalculator> {
           ),
         ),
         keyboardType: TextInputType.number,
+      ),
+    );
+  }
+}
+
+// History Page (placeholder)
+class HistoryPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('History'),
+        backgroundColor: Colors.blue[900],
+      ),
+      body: Center(
+        child: Text('History Page Content Goes Here'),
       ),
     );
   }
