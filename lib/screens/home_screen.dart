@@ -537,7 +537,7 @@ class ProfileTab extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           const Text(
-            "Profile",
+            "Profile ",
             style: TextStyle(
               fontSize: 25,
               fontWeight: FontWeight.bold,
