@@ -70,8 +70,51 @@ class _LoanCalculatorScreenState extends State<LoanCalculatorScreen> {
     return Scaffold(
       backgroundColor: theme.colorScheme.surface,
       appBar: AppBar(
-        title: const Text('Loan Calculator'),
+        title: const Text('Loan Calculator', style: TextStyle(fontWeight: FontWeight.normal, fontSize: 24),),
+        leading: IconButton(
+          icon: const Icon(
+            Icons.arrow_back_ios_new_rounded,
+            size: 15, // smaller, sleeker arrow
+            color: Colors.white,
+          ),
+          onPressed: () => Navigator.pop(context),//Navigator.of(context).maybePop(),
+          tooltip: 'Back',
+        ),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.share_rounded, color: Colors.white),
+            tooltip: 'Share Result',
+            onPressed: () {
+              final snackBar = SnackBar(
+                content: Text(
+                  _monthlyPayment > 0
+                      ? 'Share this result: Monthly payment \$${_monthlyPayment.toStringAsFixed(2)}'
+                      : 'Please calculate a loan first!',
+                ),
+                duration: const Duration(seconds: 2),
+              );
+              ScaffoldMessenger.of(context).showSnackBar(snackBar);
+            },
+          ).animate().fadeIn(duration: 300.ms, delay: 200.ms),
+          IconButton(
+            icon: const Icon(Icons.history_rounded, color: Colors.white),
+            tooltip: 'Calculation History',
+            onPressed: () {
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(
+                  content: Text('History feature coming soon!'),
+                  duration: Duration(seconds: 2),
+                ),
+              );
+            },
+          ).animate().fadeIn(duration: 300.ms, delay: 300.ms),
+          const SizedBox(width: 8),
+        ],
+        backgroundColor: Colors.black87,
+        elevation: 2,
       ),
+
+
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(20.0),
         child: Column(

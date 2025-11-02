@@ -46,6 +46,8 @@ dependencies:
   flutter_animate: ^4.5.2
   font_awesome_flutter: ^10.12.0
   lottie: ^3.3.2
+  google_fonts: ^6.3.2
+  flutter_blur: ^0.0.2
 
 
 
