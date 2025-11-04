@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
 import 'dart:math';
 
+import '../../database/db_helper.dart';
+import '../../models/calculation.dart';
+import '../history/history_page.dart';
+
+
 class CompoundInterestScreen extends StatefulWidget {
   const CompoundInterestScreen({super.key});
 
@@ -24,7 +29,7 @@ class _CompoundInterestScreenState extends State<CompoundInterestScreen> {
     'Monthly': 12,
   };
 
-  void _calculateCI() {
+  void _calculateCI() async{
     final double principal = double.tryParse(_principalController.text) ?? 0;
     final double rate = double.tryParse(_rateController.text) ?? 0;
     final double time = double.tryParse(_timeController.text) ?? 0;
@@ -32,12 +37,26 @@ class _CompoundInterestScreenState extends State<CompoundInterestScreen> {
 
     if (principal > 0 && rate > 0 && time > 0) {
       final double amount = principal * pow((1 + rate / (100 * n)), n * time);
-      final double ci = amount - principal;
+      double ci = amount - principal;
+
+      ci = (ci * 100).roundToDouble() / 100;
 
       setState(() {
         _compoundInterest = ci;
         _totalAmount = amount;
       });
+
+      await DBHelper.instance.insertData(
+        InterestData.fromMap({
+          'principal': principal,
+          'rate': rate,
+          'time': time,
+          'result': ci,
+          'amount': amount,
+          "type": "CI"
+        }),
+      );
+
     }
   }
 

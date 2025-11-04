@@ -49,3 +49,14 @@ class InterestData{
   }
 
 }
+
+
+class SIPData{
+  double investment;
+  double returns;
+  double years;
+
+  SIPData({required this.investment, required this.returns, required this.years});
+
+
+}

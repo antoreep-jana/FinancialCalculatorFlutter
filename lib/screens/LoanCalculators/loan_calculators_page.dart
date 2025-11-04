@@ -4,6 +4,9 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'dart:math';
 
+import '../../database/db_helper.dart';
+import '../../models/calculation.dart';
+
 // class LoanCalculatorsPage extends StatelessWidget {
 //   const LoanCalculatorsPage({Key? key}) : super(key: key);
 //
@@ -245,7 +248,7 @@ class _LoanCalculatorScreenState extends State<LoanCalculatorScreen> {
   }
 
   // --- Calculation Logic ---
-  void _calculateLoan() {
+  Future<void> _calculateLoan() async {
     setState(() {
       double rate = _interestRate / 100 / 12;
       int months = _loanTerm.toInt();
@@ -253,6 +256,17 @@ class _LoanCalculatorScreenState extends State<LoanCalculatorScreen> {
       _totalRepayment = _monthlyPayment * months;
       _totalInterest = _totalRepayment - _loanAmount;
     });
+
+    // await DBHelper.instance.insertData(
+    //   InterestData.fromMap({
+    //     'principal': principal,
+    //     'rate': rate,
+    //     'time': time,
+    //     'result': ci,
+    //     'amount': amount,
+    //     "type": "EMI"
+    //   }),
+    // );
   }
 
   // --- Result Card ---

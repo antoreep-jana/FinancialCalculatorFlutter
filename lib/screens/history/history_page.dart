@@ -58,7 +58,7 @@ class _HistoryPageState extends State<HistoryPage> {
               return ListTile(
                 leading: Icon(Icons.calculate),
                 title: Text("₹${item['principal']} @ ${item['rate']}% for ${item['time']} yrs"),
-                subtitle: Text("Interest: ₹${item['result']}"),
+                subtitle: Text("Interest: ₹${item['result']}    Type: ${item['type']}"),
                 //trailing: Text(item['createdAt'].substring(0, 10)),
                 trailing: IconButton(onPressed: (){
                       ScaffoldMessenger.of(context).showSnackBar(

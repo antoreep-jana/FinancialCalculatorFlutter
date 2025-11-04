@@ -236,6 +236,8 @@ class _SipCalculatorState extends State<SipCalculator> {
       totalInvested = invested;
       estimatedReturns = returns;
     });
+
+
   }
 
   @override
