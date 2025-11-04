@@ -51,52 +51,65 @@ class _SettingsPageState extends State<SettingsPage> {
         padding: const EdgeInsets.all(8.0),
         child: Column(
           children: [
-            ListTile(
-              leading: const Icon(Icons.person, color: Colors.blue),
-              title: const Text("Edit Profile"),
-              subtitle: const Text("Change your profile details"),
-              onTap: () {
-                // Navigate to the edit profile page or show a dialog
-              },
-            ),
-            const Divider(),
-            ListTile(
-              leading: const Icon(Icons.notifications, color: Colors.blue),
-              title: const Text("Notifications"),
-              subtitle: const Text("Manage notification preferences"),
-              onTap: () {
-                // Navigate to notifications settings
-              },
-            ),
-            const Divider(),
-            ListTile(
-              leading: const Icon(Icons.lock, color: Colors.blue),
-              title: const Text("Privacy Settings"),
-              subtitle: const Text("Manage your privacy settings"),
-              onTap: () {
-                // Navigate to privacy settings
-              },
-            ),
-            const Divider(),
-            ListTile(
-              leading: const Icon(Icons.language, color: Colors.blue),
-              title: const Text("Language"),
-              subtitle: const Text("Change your language preference"),
-              onTap: () {
-                // Navigate to language settings
-              },
-            ),
-            const Divider(),
-            ListTile(
-              leading: const Icon(Icons.exit_to_app, color: Colors.red),
-              title: const Text("Logout"),
-              subtitle: const Text("Sign out of your account"),
-              onTap: () {
-                // Handle logout logic
-              },
-            ),
 
-            const Divider(),
+            // TODO: Add Edit Profile Functionality
+            // ListTile(
+            //   leading: const Icon(Icons.person, color: Colors.blue),
+            //   title: const Text("Edit Profile"),
+            //   subtitle: const Text("Change your profile details"),
+            //   onTap: () {
+            //     // Navigate to the edit profile page or show a dialog
+            //   },
+            // ),
+            // const Divider(),
+
+
+            // TODO: Add Notifications functionality
+            // ListTile(
+            //   leading: const Icon(Icons.notifications, color: Colors.blue),
+            //   title: const Text("Notifications"),
+            //   subtitle: const Text("Manage notification preferences"),
+            //   onTap: () {
+            //     // Navigate to notifications settings
+            //   },
+            // ),
+            // const Divider(),
+
+
+            // TODO: Add Privacy Settings
+            // ListTile(
+            //   leading: const Icon(Icons.lock, color: Colors.blue),
+            //   title: const Text("Privacy Settings"),
+            //   subtitle: const Text("Manage your privacy settings"),
+            //   onTap: () {
+            //     // Navigate to privacy settings
+            //   },
+            // ),
+            // const Divider(),
+
+            // TODO : Add Language Settings
+
+            // ListTile(
+            //   leading: const Icon(Icons.language, color: Colors.blue),
+            //   title: const Text("Language"),
+            //   subtitle: const Text("Change your language preference"),
+            //   onTap: () {
+            //     // Navigate to language settings
+            //   },
+            // ),
+            // const Divider(),
+
+            // TODO: Add Logout and SignIn Options.
+            // ListTile(
+            //   leading: const Icon(Icons.exit_to_app, color: Colors.red),
+            //   title: const Text("Logout"),
+            //   subtitle: const Text("Sign out of your account"),
+            //   onTap: () {
+            //     // Handle logout logic
+            //   },
+            // ),
+            //
+            // const Divider(),
 
             // Currency Settings Section
             // ListTile(

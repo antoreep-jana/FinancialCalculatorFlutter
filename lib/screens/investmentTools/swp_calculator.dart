@@ -319,7 +319,6 @@
 //   }
 // }
 
-
 import 'package:flutter/material.dart';
 
 class SWPCalculator extends StatefulWidget {
@@ -327,8 +326,7 @@ class SWPCalculator extends StatefulWidget {
   _SWPCalculatorState createState() => _SWPCalculatorState();
 }
 
-class _SWPCalculatorState extends State<SWPCalculator>
-    with SingleTickerProviderStateMixin {
+class _SWPCalculatorState extends State<SWPCalculator> {
   final TextEditingController lumpsumController = TextEditingController();
   final TextEditingController rateController = TextEditingController();
   final TextEditingController withdrawalController = TextEditingController();
@@ -344,15 +342,6 @@ class _SWPCalculatorState extends State<SWPCalculator>
   int timePeriodInMonths = 0;
   double finalRemainingValue = 0;
   double totalWithdrawn = 0;
-
-  late AnimationController _animationController;
-
-  @override
-  void initState() {
-    super.initState();
-    _animationController =
-        AnimationController(vsync: this, duration: Duration(milliseconds: 500));
-  }
 
   void calculateSWP() {
     setState(() {
@@ -374,8 +363,6 @@ class _SWPCalculatorState extends State<SWPCalculator>
           break;
         }
       }
-
-      _animationController.forward(from: 0);
     });
   }
 
@@ -386,22 +373,18 @@ class _SWPCalculatorState extends State<SWPCalculator>
   }
 
   @override
-  void dispose() {
-    _animationController.dispose();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
-    final Color accentPurple = Colors.purple.shade400;
-    final Color accentTeal = Colors.teal.shade400;
-    final Color accentIndigo = Colors.indigo.shade400;
+    final theme = Theme.of(context);
+    final primaryColor = theme.colorScheme.primary;
+    final secondaryColor = theme.colorScheme.secondary;
+    final surfaceColor = theme.colorScheme.surface;
+    final onSurface = theme.colorScheme.onSurface;
 
     return Scaffold(
-      backgroundColor: Colors.grey[100],
+      backgroundColor: theme.colorScheme.background,
       appBar: AppBar(
         title: Text('SWP Calculator'),
-        backgroundColor: Colors.indigo,
+        backgroundColor: surfaceColor,
         centerTitle: true,
         actions: [
           PopupMenuButton<String>(
@@ -411,14 +394,12 @@ class _SWPCalculatorState extends State<SWPCalculator>
               });
             },
             icon: Icon(Icons.currency_exchange),
-            itemBuilder: (BuildContext context) {
-              return currencies
-                  .map((currency) => PopupMenuItem<String>(
-                value: currency,
-                child: Text(currency),
-              ))
-                  .toList();
-            },
+            itemBuilder: (context) => currencies
+                .map((currency) => PopupMenuItem(
+              value: currency,
+              child: Text(currency),
+            ))
+                .toList(),
           ),
         ],
       ),
@@ -428,41 +409,43 @@ class _SWPCalculatorState extends State<SWPCalculator>
           children: [
             // Input Card
             Card(
-              color: Colors.white,
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(16)),
+              color: surfaceColor,
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
               elevation: 4,
               child: Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: Column(
                   children: [
                     _buildTextField(
-                        controller: lumpsumController,
-                        label: 'Lumpsum Amount',
-                        icon: Icons.money,
-                        highlightColor: accentPurple),
+                      controller: lumpsumController,
+                      label: 'Lumpsum Amount',
+                      icon: Icons.money,
+                      theme: Theme.of(context),
+                    ),
                     _buildTextField(
-                        controller: rateController,
-                        label: 'Rate of Return (%)',
-                        icon: Icons.percent,
-                        highlightColor: accentTeal),
+                      controller: rateController,
+                      label: 'Rate of Return (%)',
+                      icon: Icons.percent,
+                      theme: Theme.of(context),
+                    ),
                     _buildTextField(
-                        controller: withdrawalController,
-                        label: 'Monthly Withdrawal Amount',
-                        icon: Icons.account_balance_wallet,
-                        highlightColor: accentIndigo),
+                      controller: withdrawalController,
+                      label: 'Monthly Withdrawal Amount',
+                      icon: Icons.account_balance_wallet,
+                      theme: Theme.of(context),
+                    ),
                     _buildTextField(
-                        controller: periodController,
-                        label: 'Time Period (Months)',
-                        icon: Icons.access_time,
-                        highlightColor: accentPurple),
+                      controller: periodController,
+                      label: 'Time Period (Months)',
+                      icon: Icons.access_time,
+                      theme: Theme.of(context),
+                    ),
                     SizedBox(height: 20),
                     ElevatedButton(
                       onPressed: calculateSWP,
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: accentTeal,
-                        padding:
-                        EdgeInsets.symmetric(horizontal: 32, vertical: 14),
+                        backgroundColor: Theme.of(context).colorScheme.primary,
+                        padding: EdgeInsets.symmetric(horizontal: 32, vertical: 14),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(12),
                         ),
@@ -470,86 +453,154 @@ class _SWPCalculatorState extends State<SWPCalculator>
                       child: Text(
                         'Calculate SWP',
                         style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white),
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          color: Theme.of(context).colorScheme.onPrimary,
+                        ),
                       ),
                     )
                   ],
                 ),
               ),
             ),
+
+            // Card(
+            //   color: surfaceColor,
+            //   shape: RoundedRectangleBorder(
+            //       borderRadius: BorderRadius.circular(16)),
+            //   elevation: 4,
+            //   child: Padding(
+            //     padding: const EdgeInsets.all(16.0),
+            //     child: Column(
+            //       children: [
+            //         _buildTextField(
+            //             controller: lumpsumController,
+            //             label: 'Lumpsum Amount',
+            //             icon: Icons.money,
+            //             highlightColor: primaryColor),
+            //         _buildTextField(
+            //             controller: rateController,
+            //             label: 'Rate of Return (%)',
+            //             icon: Icons.percent,
+            //             highlightColor: secondaryColor),
+            //         _buildTextField(
+            //             controller: withdrawalController,
+            //             label: 'Monthly Withdrawal Amount',
+            //             icon: Icons.account_balance_wallet,
+            //             highlightColor: primaryColor),
+            //         _buildTextField(
+            //             controller: periodController,
+            //             label: 'Time Period (Months)',
+            //             icon: Icons.access_time,
+            //             highlightColor: secondaryColor),
+            //         SizedBox(height: 20),
+            //         ElevatedButton(
+            //           onPressed: calculateSWP,
+            //           style: ElevatedButton.styleFrom(
+            //             backgroundColor: primaryColor,
+            //             padding:
+            //             EdgeInsets.symmetric(horizontal: 32, vertical: 14),
+            //             shape: RoundedRectangleBorder(
+            //               borderRadius: BorderRadius.circular(12),
+            //             ),
+            //           ),
+            //           child: Text(
+            //             'Calculate SWP',
+            //             style: TextStyle(
+            //                 fontSize: 16,
+            //                 fontWeight: FontWeight.bold,
+            //                 color: theme.colorScheme.onPrimary),
+            //           ),
+            //         )
+            //       ],
+            //     ),
+            //   ),
+            // ),
             SizedBox(height: 24),
-            // Results Card
-            if (withdrawalAmount > 0)
-              FadeTransition(
-                opacity: _animationController
-                    .drive(Tween(begin: 0.0, end: 1.0)
-                    .chain(CurveTween(curve: Curves.easeIn))),
-                child: Card(
-                  color: Colors.white,
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(16)),
-                  elevation: 4,
-                  child: Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: Column(
-                      children: [
-                        _buildResultRow(
-                            label: 'Total Withdrawn',
-                            value: totalWithdrawn,
-                            color: accentPurple),
-                        _buildResultRow(
-                            label: 'Remaining Value',
-                            value: finalRemainingValue,
-                            color: accentIndigo),
-                        SwitchListTile(
-                          title: Text('Show Detailed Results',
-                              style: TextStyle(color: accentTeal)),
-                          value: showDetailedResults,
-                          onChanged: (value) => toggleDetailedView(),
-                        ),
-                        if (showDetailedResults)
-                          SingleChildScrollView(
-                            scrollDirection: Axis.horizontal,
-                            child: DataTable(
-                              headingRowColor: MaterialStateProperty.all(
-                                  Colors.grey.shade200),
-                              columns: [
-                                DataColumn(
-                                    label: Text('Month',
-                                        style: TextStyle(color: accentPurple))),
-                                DataColumn(
-                                    label: Text('Withdrawal',
-                                        style: TextStyle(color: accentTeal))),
-                                DataColumn(
-                                    label: Text('Balance',
-                                        style: TextStyle(color: accentIndigo))),
-                              ],
-                              rows: List.generate(timePeriodInMonths, (index) {
-                                double balance = lumpsum;
-                                double monthlyRate = rateOfReturn / 100 / 12;
-                                for (int i = 0; i <= index; i++) {
-                                  balance =
-                                      (balance * (1 + monthlyRate)) -
-                                          withdrawalAmount;
-                                  if (balance < 0) balance = 0;
-                                }
-                                return DataRow(cells: [
-                                  DataCell(Text('${index + 1}')),
-                                  DataCell(Text(
-                                      '${selectedCurrency} ${withdrawalAmount.toStringAsFixed(2)}')),
-                                  DataCell(Text(
-                                      '${selectedCurrency} ${balance.toStringAsFixed(2)}')),
-                                ]);
-                              }),
-                            ),
+            // Animated Results Card
+            AnimatedSwitcher(
+              duration: Duration(milliseconds: 500),
+              transitionBuilder: (child, animation) {
+                return FadeTransition(
+                  opacity: animation,
+                  child: SlideTransition(
+                    position: Tween<Offset>(
+                      begin: Offset(0, 0.1),
+                      end: Offset(0, 0),
+                    ).animate(animation),
+                    child: child,
+                  ),
+                );
+              },
+              child: withdrawalAmount > 0
+                  ? Card(
+                key: ValueKey(totalWithdrawn),
+                color: surfaceColor,
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(16)),
+                elevation: 4,
+                child: Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Column(
+                    children: [
+                      _buildResultRow(
+                          label: 'Total Withdrawn',
+                          value: totalWithdrawn,
+                          color: primaryColor),
+                      _buildResultRow(
+                          label: 'Remaining Value',
+                          value: finalRemainingValue,
+                          color: secondaryColor),
+                      SwitchListTile(
+                        title: Text('Show Detailed Results',
+                            style: TextStyle(color: onSurface)),
+                        value: showDetailedResults,
+                        onChanged: (value) => toggleDetailedView(),
+                      ),
+                      if (showDetailedResults)
+                        SingleChildScrollView(
+                          scrollDirection: Axis.horizontal,
+                          child: DataTable(
+                            headingRowColor: MaterialStateProperty.all(
+                                theme.colorScheme.background),
+                            columns: [
+                              DataColumn(
+                                  label: Text('Month',
+                                      style:
+                                      TextStyle(color: primaryColor))),
+                              DataColumn(
+                                  label: Text('Withdrawal',
+                                      style:
+                                      TextStyle(color: secondaryColor))),
+                              DataColumn(
+                                  label: Text('Balance',
+                                      style: TextStyle(color: onSurface))),
+                            ],
+                            rows: List.generate(timePeriodInMonths, (index) {
+                              double balance = lumpsum;
+                              double monthlyRate = rateOfReturn / 100 / 12;
+                              for (int i = 0; i <= index; i++) {
+                                balance =
+                                    (balance * (1 + monthlyRate)) -
+                                        withdrawalAmount;
+                                if (balance < 0) balance = 0;
+                              }
+                              return DataRow(cells: [
+                                DataCell(Text('${index + 1}')),
+                                DataCell(Text(
+                                    '$selectedCurrency ${withdrawalAmount.toStringAsFixed(2)}')),
+                                DataCell(Text(
+                                    '$selectedCurrency ${balance.toStringAsFixed(2)}')),
+                              ]);
+                            }),
                           ),
-                      ],
-                    ),
+                        ),
+                    ],
                   ),
                 ),
-              ),
+              )
+                  : SizedBox.shrink(),
+            ),
           ],
         ),
       ),
@@ -560,32 +611,65 @@ class _SWPCalculatorState extends State<SWPCalculator>
     required TextEditingController controller,
     required String label,
     required IconData icon,
-    required Color highlightColor,
+    required ThemeData theme,
   }) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: TextField(
         controller: controller,
         keyboardType: TextInputType.number,
-        style: TextStyle(color: Colors.black87),
+        style: TextStyle(color: Colors.white), // text input color
         decoration: InputDecoration(
           labelText: label,
-          labelStyle: TextStyle(color: highlightColor),
-          prefixIcon: Icon(icon, color: highlightColor),
+          labelStyle: TextStyle(color: Colors.white), // label text color
+          prefixIcon: Icon(icon, color: Colors.white),
           filled: true,
-          fillColor: Colors.grey[100],
+          fillColor: theme.colorScheme.tertiary, // background
           focusedBorder: OutlineInputBorder(
-            borderSide: BorderSide(color: highlightColor, width: 2),
+            borderSide: BorderSide(color: Colors.white, width: 2),
             borderRadius: BorderRadius.circular(12),
           ),
           enabledBorder: OutlineInputBorder(
-            borderSide: BorderSide(color: Colors.grey[300]!, width: 1),
+            borderSide: BorderSide(color: Colors.white54, width: 1),
             borderRadius: BorderRadius.circular(12),
           ),
         ),
       ),
     );
   }
+
+
+
+  // Widget _buildTextField({
+  //   required TextEditingController controller,
+  //   required String label,
+  //   required IconData icon,
+  //   required Color highlightColor,
+  // }) {
+  //   return Padding(
+  //     padding: const EdgeInsets.symmetric(vertical: 8.0),
+  //     child: TextField(
+  //       controller: controller,
+  //       keyboardType: TextInputType.number,
+  //       style: TextStyle(color: Colors.black87),
+  //       decoration: InputDecoration(
+  //         labelText: label,
+  //         labelStyle: TextStyle(color: highlightColor),
+  //         prefixIcon: Icon(icon, color: highlightColor),
+  //         filled: true,
+  //         fillColor: Colors.grey[100],
+  //         focusedBorder: OutlineInputBorder(
+  //           borderSide: BorderSide(color: highlightColor, width: 2),
+  //           borderRadius: BorderRadius.circular(12),
+  //         ),
+  //         enabledBorder: OutlineInputBorder(
+  //           borderSide: BorderSide(color: Colors.grey[300]!, width: 1),
+  //           borderRadius: BorderRadius.circular(12),
+  //         ),
+  //       ),
+  //     ),
+  //   );
+  // }
 
   Widget _buildResultRow(
       {required String label, required double value, required Color color}) {
@@ -597,7 +681,7 @@ class _SWPCalculatorState extends State<SWPCalculator>
           Text(label,
               style: TextStyle(
                   fontSize: 18, fontWeight: FontWeight.bold, color: color)),
-          Text('${selectedCurrency} ${value.toStringAsFixed(2)}',
+          Text('$selectedCurrency ${value.toStringAsFixed(2)}',
               style: TextStyle(
                   fontSize: 18, fontWeight: FontWeight.bold, color: color)),
         ],

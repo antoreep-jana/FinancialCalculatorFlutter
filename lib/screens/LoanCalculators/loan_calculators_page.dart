@@ -4,48 +4,48 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'dart:math';
 
-class LoanCalculatorsPage extends StatelessWidget {
-  const LoanCalculatorsPage({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      themeMode: ThemeMode.system,
-      theme: ThemeData(
-        useMaterial3: true,
-        colorScheme: ColorScheme.light(
-          primary: Colors.deepPurple.shade400,
-          secondary: Colors.teal.shade400,
-          surface: const Color(0xFFF7F7F9),
-          onSurface: Colors.grey.shade900,
-        ),
-        textTheme: const TextTheme(
-          bodyLarge: TextStyle(fontFamily: 'Roboto', fontSize: 16),
-          titleLarge: TextStyle(
-            fontFamily: 'Poppins',
-            fontWeight: FontWeight.bold,
-            fontSize: 20,
-          ),
-        ),
-        appBarTheme: AppBarTheme(
-          backgroundColor: Colors.deepPurple.shade400,
-          foregroundColor: Colors.white,
-          elevation: 2,
-        ),
-      ),
-      darkTheme: ThemeData(
-        brightness: Brightness.dark,
-        useMaterial3: true,
-        colorScheme: ColorScheme.dark(
-          primary: Colors.deepPurple.shade300,
-          secondary: Colors.tealAccent.shade200,
-        ),
-      ),
-      home: const LoanCalculatorScreen(),
-    );
-  }
-}
+// class LoanCalculatorsPage extends StatelessWidget {
+//   const LoanCalculatorsPage({Key? key}) : super(key: key);
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return MaterialApp(
+//       debugShowCheckedModeBanner: false,
+//       themeMode: ThemeMode.system,
+//       theme: ThemeData(
+//         useMaterial3: true,
+//         colorScheme: ColorScheme.light(
+//           primary: Colors.deepPurple.shade400,
+//           secondary: Colors.teal.shade400,
+//           surface: const Color(0xFFF7F7F9),
+//           onSurface: Colors.grey.shade900,
+//         ),
+//         textTheme: const TextTheme(
+//           bodyLarge: TextStyle(fontFamily: 'Roboto', fontSize: 16),
+//           titleLarge: TextStyle(
+//             fontFamily: 'Poppins',
+//             fontWeight: FontWeight.bold,
+//             fontSize: 20,
+//           ),
+//         ),
+//         appBarTheme: AppBarTheme(
+//           backgroundColor: Colors.deepPurple.shade400,
+//           foregroundColor: Colors.white,
+//           elevation: 2,
+//         ),
+//       ),
+//       darkTheme: ThemeData(
+//         brightness: Brightness.dark,
+//         useMaterial3: true,
+//         colorScheme: ColorScheme.dark(
+//           primary: Colors.deepPurple.shade300,
+//           secondary: Colors.tealAccent.shade200,
+//         ),
+//       ),
+//       home: const LoanCalculatorScreen(),
+//     );
+//   }
+// }
 
 class LoanCalculatorScreen extends StatefulWidget {
   const LoanCalculatorScreen({Key? key}) : super(key: key);
@@ -70,7 +70,7 @@ class _LoanCalculatorScreenState extends State<LoanCalculatorScreen> {
     return Scaffold(
       backgroundColor: theme.colorScheme.surface,
       appBar: AppBar(
-        title: const Text('Loan Calculator', style: TextStyle(fontWeight: FontWeight.normal, fontSize: 24),),
+        title: const Text('EMI Calculator', style: TextStyle(fontWeight: FontWeight.normal, fontSize: 24),),
         leading: IconButton(
           icon: const Icon(
             Icons.arrow_back_ios_new_rounded,
@@ -285,7 +285,7 @@ class _LoanCalculatorScreenState extends State<LoanCalculatorScreen> {
                 color: theme.colorScheme.primary,
               )),
           const SizedBox(height: 12),
-          _resultRow('Monthly Payment', '\$${_monthlyPayment.toStringAsFixed(2)}', theme),
+          _resultRow('Monthly Payment (EMI)', '\$${_monthlyPayment.toStringAsFixed(2)}', theme),
           _resultRow('Total Interest', '\$${_totalInterest.toStringAsFixed(2)}', theme),
           _resultRow('Total Repayment', '\$${_totalRepayment.toStringAsFixed(2)}', theme),
         ],

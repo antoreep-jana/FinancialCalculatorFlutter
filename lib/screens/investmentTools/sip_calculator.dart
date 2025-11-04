@@ -293,16 +293,19 @@ class _SipCalculatorState extends State<SipCalculator> {
               const SizedBox(height: 20),
               SizedBox(
                 width: double.infinity,
+                height: 40,
                 child: ElevatedButton(
                   onPressed: calculateSIP,
                   style: ElevatedButton.styleFrom(
                     backgroundColor: colorScheme.primary,
                     foregroundColor: colorScheme.onPrimary, // ensures text/icon is visible
                   ),
-                  child: Text("Calculate"), // no const
+                  child: Text("Calculate", ), // no const
                 )
 
               ),
+              const SizedBox(height: 20), // add space here
+
               if (futureValue > 0)
                 SIPSummaryCard(
                   totalInvested: totalInvested,

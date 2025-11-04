@@ -93,6 +93,7 @@
 // }
 
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'lumpsum_calculator.dart';
 import 'sip_calculator.dart';
@@ -113,7 +114,11 @@ class InvestmentToolsPage extends StatelessWidget {
         'icon': Icons.trending_up_outlined,
         'onTap': () {
           Navigator.of(context).push(
-              MaterialPageRoute(builder: (context) =>  SipCalculator()));
+            // Removed Material Page Route (abrupt transition)
+            // MaterialPageRoute(builder: (context) =>  SipCalculator()));
+
+            // Shifted to smoother transition
+            CupertinoPageRoute(builder : (_) => SipCalculator()));
         }
       },
       {
@@ -122,15 +127,20 @@ class InvestmentToolsPage extends StatelessWidget {
         'icon': Icons.savings_outlined,
         'onTap': () {
           Navigator.of(context).push(
-              MaterialPageRoute(builder: (context) =>  LumpSumInvestmentPage()));
+             // Removed Material Page Route (abrupt transition)
+             // MaterialPageRoute(builder: (context) =>  LumpSumInvestmentPage()));
+
+            // Added Cupertino Transition (Smoother)
+            CupertinoPageRoute(builder: (_) => LumpSumInvestmentPage()));
         }
       },
-      {
-        'title': 'Goal Calculator',
-        'description': 'Plan how much to invest monthly to reach your goal.',
-        'icon': Icons.flag_outlined,
-        'onTap': () {}, // Placeholder
-      },
+      // TODO: Implement Goal Calculator
+      // {
+      //   'title': 'Goal Calculator',
+      //   'description': 'Plan how much to invest monthly to reach your goal.',
+      //   'icon': Icons.flag_outlined,
+      //   'onTap': () {}, // Placeholder
+      // },
       {
         "title": "SWP Calculator",
         "description":
@@ -138,7 +148,12 @@ class InvestmentToolsPage extends StatelessWidget {
         "icon": Icons.monetization_on,
         "onTap": () {
           Navigator.of(context).push(
-              MaterialPageRoute(builder: (context) => SWPCalculator()));
+
+             // Replacing abrupt transition with smoother cupertino transitions
+             // MaterialPageRoute(builder: (context) => SWPCalculator()));
+
+            // Added cupertino transitions
+            CupertinoPageRoute(builder: (_) => SWPCalculator()));
         }
       }
     ];

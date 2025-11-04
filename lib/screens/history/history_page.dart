@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
 import '../../database/db_helper.dart';
 
+
+// TODO: Make the History Page better. Tappable Cards, Filters, Search etc.
+
+// TODO:
+
 class HistoryPage extends StatefulWidget {
   @override
   _HistoryPageState createState() => _HistoryPageState();

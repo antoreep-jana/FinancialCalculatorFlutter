@@ -43,11 +43,17 @@ class _CompoundInterestScreenState extends State<CompoundInterestScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
+
     return Scaffold(
-      backgroundColor: const Color(0xfff3f6fa),
+      backgroundColor: colorScheme.background,
       appBar: AppBar(
-        title: const Text('Compound Interest Calculator'),
-        backgroundColor: const Color(0xff1976d2),
+        title: Text(
+          'Compound Interest',
+          style: textTheme.titleLarge?.copyWith(color: Colors.white),
+        ),
+        backgroundColor: colorScheme.surface,
         elevation: 3,
       ),
       body: SingleChildScrollView(
@@ -57,41 +63,27 @@ class _CompoundInterestScreenState extends State<CompoundInterestScreen> {
             Card(
               elevation: 4,
               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+              color: colorScheme.surface,
               child: Padding(
                 padding: const EdgeInsets.all(20),
                 child: Column(
                   children: [
-                    TextField(
+                    _buildTextField(
                       controller: _principalController,
-                      keyboardType: TextInputType.number,
-                      decoration: const InputDecoration(
-                        labelText: 'Principal Amount (₹)',
-                        border: OutlineInputBorder(),
-                        prefixIcon: Icon(Icons.account_balance_wallet_outlined),
-                      ),
-                      onChanged: (_) => _calculateCI(),
+                      label: 'Principal Amount (₹)',
+                      icon: Icons.account_balance_wallet_outlined,
                     ),
                     const SizedBox(height: 16),
-                    TextField(
+                    _buildTextField(
                       controller: _rateController,
-                      keyboardType: TextInputType.number,
-                      decoration: const InputDecoration(
-                        labelText: 'Rate of Interest (%)',
-                        border: OutlineInputBorder(),
-                        prefixIcon: Icon(Icons.percent),
-                      ),
-                      onChanged: (_) => _calculateCI(),
+                      label: 'Rate of Interest (%)',
+                      icon: Icons.percent,
                     ),
                     const SizedBox(height: 16),
-                    TextField(
+                    _buildTextField(
                       controller: _timeController,
-                      keyboardType: TextInputType.number,
-                      decoration: const InputDecoration(
-                        labelText: 'Time (Years)',
-                        border: OutlineInputBorder(),
-                        prefixIcon: Icon(Icons.access_time),
-                      ),
-                      onChanged: (_) => _calculateCI(),
+                      label: 'Time (Years)',
+                      icon: Icons.access_time,
                     ),
                     const SizedBox(height: 16),
                     DropdownButtonFormField<String>(
@@ -103,7 +95,7 @@ class _CompoundInterestScreenState extends State<CompoundInterestScreen> {
                         setState(() => _selectedFrequency = value!);
                         _calculateCI();
                       },
-                      decoration: const InputDecoration(
+                      decoration: InputDecoration(
                         labelText: 'Compounding Frequency',
                         border: OutlineInputBorder(),
                         prefixIcon: Icon(Icons.schedule),
@@ -115,30 +107,71 @@ class _CompoundInterestScreenState extends State<CompoundInterestScreen> {
             ),
             const SizedBox(height: 24),
             if (_compoundInterest != null)
-              Card(
-                color: Colors.white,
-                elevation: 3,
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
-                child: Padding(
-                  padding: const EdgeInsets.all(20),
-                  child: Column(
-                    children: [
-                      Text(
-                        'Compound Interest: ₹${_compoundInterest!.toStringAsFixed(2)}',
-                        style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.black87),
-                      ),
-                      const SizedBox(height: 8),
-                      Text(
-                        'Total Amount: ₹${_totalAmount!.toStringAsFixed(2)}',
-                        style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w500, color: Colors.black54),
-                      ),
-                    ],
+              AnimatedOpacity(
+                duration: const Duration(seconds: 2),
+                // opacity: ,
+                opacity: 1,
+                child: Card(
+                  color: colorScheme.tertiary,
+                  elevation: 6,
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+                  child: Padding(
+                    padding: const EdgeInsets.all(20),
+                    child: Column(
+                      children: [
+                        Text(
+                          'Compound Interest: ₹${_compoundInterest!.toStringAsFixed(2)}',
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.normal,
+                            color: colorScheme.secondary,
+                          ),
+                        ),
+                        const SizedBox(height: 8),
+                        Text(
+                          'Total Amount: ₹${_totalAmount!.toStringAsFixed(2)}',
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.w500,
+                            // color: colorScheme.onSecondary.withOpacity(0.8),
+                            color: colorScheme.secondary
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
           ],
         ),
       ),
+    );
+  }
+
+  Widget _buildTextField({
+    required TextEditingController controller,
+    required String label,
+    required IconData icon,
+  }) {
+    final colorScheme = Theme.of(context).colorScheme;
+
+    return TextField(
+      controller: controller,
+      keyboardType: TextInputType.number,
+      decoration: InputDecoration(
+        labelText: label,
+        prefixIcon: Icon(icon, color: colorScheme.primary),
+        filled: true,
+        fillColor: colorScheme.surface,
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(14),
+          borderSide: BorderSide.none,
+        ),
+        contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 18),
+        labelStyle: TextStyle(color: colorScheme.onSurface),
+        hintStyle: TextStyle(color: colorScheme.onSurface.withOpacity(0.6)),
+      ),
+      onChanged: (_) => _calculateCI(),
     );
   }
 }

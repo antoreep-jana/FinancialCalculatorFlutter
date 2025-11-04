@@ -315,8 +315,10 @@
 //   }
 // }
 
+import 'package:financial_calculator/screens/LoanCalculators/loan_calculator_screen.dart';
 import 'package:financial_calculator/screens/settings/backup_sync.dart';
 import 'package:financial_calculator/screens/settings/settings.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'FeeTaxAnalyzers/fee_tax_analyzer_page.dart';
@@ -351,8 +353,10 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        elevation: 0,
-        toolbarHeight: 80,
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,// Theme.of(context).appBarTheme.backgroundColor,
+        // shadowColor: Colors.grey,
+        // elevation: 2,
+        toolbarHeight: 70,
         centerTitle: true,
         title: const Text(
           "Financial Calculator",
@@ -363,8 +367,10 @@ class _HomeScreenState extends State<HomeScreen> {
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _selectedIndex,
         onTap: _onItemTapped,
-        selectedItemColor: Colors.deepPurple.shade400,
-        unselectedItemColor: Colors.grey,
+        // selectedItemColor: Colors.deepPurple.shade400,
+        // unselectedItemColor: Colors.grey,
+        selectedItemColor: Theme.of(context).colorScheme.primary,
+        unselectedItemColor: Theme.of(context).colorScheme.onSurface.withOpacity(0.6),
         items: const [
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
@@ -399,21 +405,35 @@ class HomeTab extends StatelessWidget {
       {
         'title': 'Loan Calculators',
         'icon': Icons.account_balance_rounded,
-        'subItems': ['EMI Calculator', 'Amortization Table'],
-        'page': LoanCalculatorScreen()
+        'subItems': ['EMI Calculator'],
+          // TODO: Add More Loan Calculators
+          //'Amortization Table'],
+        'page': LoanCalculatorPage()//LoanCalculatorScreen()
       },
       {
         'title': 'Investment Tools',
         'icon': Icons.trending_up_rounded,
-        'subItems': ['SIP Calculator', 'Lumpsum Calculator','Retirement Planner', "SWP Calculator"],
+        'subItems': ['SIP Calculator', 'Lumpsum Calculator', "SWP Calculator"], // TODO: Add Goal Calculator
         'page': InvestmentToolsPage()
       },
-      {
-        'title': 'Fee & Tax Analyzers',
-        'icon': Icons.receipt_long_rounded,
-        'subItems': ['Hidden Fee Analyzer', 'Credit Card Fee'],
-        'page': FeeTaxAnalyzersPage()
-      },
+     // TODO : Add Fee & Tax Analyzer
+
+      // {
+      //   'title': 'Fee & Tax Analyzers',
+      //   'icon': Icons.receipt_long_rounded,
+      //   'subItems': ['Hidden Fee Analyzer', 'Credit Card Fee'],
+      //   'page': FeeTaxAnalyzersPage()
+      // },
+
+      // TODO : Add FD Calculator
+
+      // TODO : Add Double Time Calculator
+
+      // TODO : Add crypto calculator
+
+      // TODO: Gauranteed Income Calculator
+
+      // TODO: ULIP Return Calculator
     ];
 
     return Padding(
@@ -426,26 +446,47 @@ class HomeTab extends StatelessWidget {
           final subItems = category['subItems'] as List<String>;
 
           return GestureDetector(
+
             onTap: () {
               Navigator.of(context).push(
-                MaterialPageRoute(builder: (context) => category['page']),
+                // Removed abrupt transition.
+                //MaterialPageRoute(builder: (context) => category['page']),
+
+                // Modified to Cupertino Transition
+                  CupertinoPageRoute(builder : (context) => category['page']),
               );
             },
             child: AnimatedContainer(
+              // color: Colors.deepPurple.shade400.withOpacity(0.08),
               duration: const Duration(milliseconds: 200),
               curve: Curves.easeInOut,
               padding: const EdgeInsets.all(18),
               decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  colors: [
-                    Colors.white,
-                    Colors.white.withOpacity(0.95),
-                  ],
-                ),
+
+                // color: Theme.of(context).colorScheme.surface, // theme-aware
+                // color: Colors.deepPurple.shade400.withOpacity(0.111),
                 borderRadius: BorderRadius.circular(22),
+                border: Border.all(
+                  color: Colors.white30,// Colors.deepPurple.shade400.withOpacity(0.08),
+                  width: 1
+                ),
+
+                  // Removing gradient completely
+
+                // gradient: LinearGradient(
+                //   colors: [
+                //     // Colors.white,
+                //     // Colors.white.withOpacity(0.95),
+                //     Colors.black87,
+                //     Colors.deepPurpleAccent.withOpacity(0.1)
+                //   ],
+                // ),
+                // borderRadius: BorderRadius.circular(22),
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.grey.withOpacity(0.12),
+                    // color:  //Colors.grey.withOpacity(0.12),
+                    color: Theme.of(context).brightness == Brightness.light ?
+                        Colors.grey.withOpacity(0.12) : Colors.black.withOpacity(0.5),
                     blurRadius: 12,
                     offset: const Offset(0, 8),
                   ),
@@ -459,10 +500,12 @@ class HomeTab extends StatelessWidget {
                       CircleAvatar(
                         radius: 28,
                         backgroundColor:
-                        Colors.deepPurple.shade400.withOpacity(0.12),
+                        //Colors.deepPurple.shade400.withOpacity(0.12),
+                        Theme.of(context).brightness == Brightness.light ? Colors.deepPurple.shade400.withOpacity(0.12) : Colors.deepPurple.shade200.withOpacity(0.12),
                         child: Icon(
                           category['icon'] as IconData,
-                          color: Colors.deepPurple.shade400,
+                          color: Theme.of(context).brightness == Brightness.light ? Colors.deepPurple.shade400 : Colors.deepPurple.shade200,
+                          //Colors.deepPurple.shade400,
                           size: 28,
                         ),
                       ),
@@ -470,10 +513,11 @@ class HomeTab extends StatelessWidget {
                       Expanded(
                         child: Text(
                           category['title'] as String,
-                          style: const TextStyle(
+                          style: TextStyle(
                             fontSize: 19,
-                            fontWeight: FontWeight.bold,
-                            color: Color(0xFF1F2937),
+                            // fontWeight: FontWeight.bold,
+                            // color: Color(0xFF1F2937),
+                            color: Theme.of(context).textTheme.bodyLarge?.color ?? Colors.white//Colors.white
                           ),
                         ),
                       ),
@@ -493,13 +537,19 @@ class HomeTab extends StatelessWidget {
                         padding: const EdgeInsets.symmetric(
                             horizontal: 12, vertical: 6),
                         decoration: BoxDecoration(
-                          color: Colors.deepPurple.shade400.withOpacity(0.08),
+                          color: Colors.deepPurple.shade400.withOpacity(0.1),
                           borderRadius: BorderRadius.circular(14),
+                          boxShadow: [BoxShadow(
+                            color: Colors.white.withOpacity(0.05),
+                            blurRadius: 8,
+                            offset: Offset(0,2)
+                          )]
                         ),
                         child: Text(
                           item,
-                          style: const TextStyle(
-                            color: Color(0xFF1F2937),
+                          style: TextStyle(
+                            // color: Color(0xFF1F2937),
+                            color : Theme.of(context).textTheme.bodyMedium?.color?? Colors.white60,
                             fontSize: 14,
                             fontWeight: FontWeight.w500,
                           ),
@@ -551,12 +601,14 @@ class ProfileTab extends StatelessWidget {
           const SizedBox(height: 8),
           const SettingsPage(),
           const SizedBox(height: 16),
-          const Text(
-            "Backup & Syncing",
-            style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
-          ),
-          const SizedBox(height: 8),
-          const BackupAndSync(),
+
+         // TODO: Add Backup & Syncing
+          // const Text(
+          //   "Backup & Syncing",
+          //   style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
+          // ),
+          // const SizedBox(height: 8),
+          // const BackupAndSync(),
         ],
       ),
     );
