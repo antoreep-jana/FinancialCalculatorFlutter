@@ -17,7 +17,9 @@ class _HistoryDetailsPageState extends State<HistoryDetailsPage> {
 
   @override
   Widget build(BuildContext context) {
-    final List<String> menuItems = ['Copy', 'Share', 'Edit'];
+
+    final List<Map<String, dynamic>> menuItems = [{'function' : 'Copy' , 'icon' : Icon(Icons.copy)},
+      {'function' : 'Share', 'icon' : Icon(Icons.share)}, {'function' : 'Edit' , "icon" : Icon(Icons.edit)}];
 
     return Scaffold(
       appBar: AppBar(title: Text("Calculation details"),
@@ -25,37 +27,18 @@ class _HistoryDetailsPageState extends State<HistoryDetailsPage> {
       actions: [
           PopupMenuButton(
               
-              itemBuilder: (context){
-           return [PopupMenuItem(
-             onTap: (){
+              itemBuilder: (BuildContext context){
 
-             },
-              value: "Copy",
-              child : Row(
-                children: [
-                  const Icon(Icons.copy),
-                  SizedBox(width: 10,),
-                  const Text("Copy")
-                ],
-              )
-            ),
-           PopupMenuItem(value : "Share",
-               child: Row(
-             children: [
-               const Icon(Icons.share),
-               SizedBox(width: 10,),
-               const Text("Share")
-             ],
-           )),
-             PopupMenuItem(value : "Edit",
-                 child: Row(
-                   children: [
-                     const Icon(Icons.edit),
-                     SizedBox(width: 10,),
-                     const Text("Edit")
-                   ],
-                 ))
-           ];
+                return menuItems.map((item) {
+                  return PopupMenuItem(value: item['function'], child: Row(
+                    children: [
+                      item['icon'],
+                      SizedBox(width: 10,),
+                      Text(item['function']),
+                    ],
+                  ), );
+                }).toList();
+
           })
 
       ],
