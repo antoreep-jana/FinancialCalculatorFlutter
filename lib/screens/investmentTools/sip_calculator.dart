@@ -161,10 +161,13 @@
 // }
 
 
+import 'package:financial_calculator/models/sip_calculation.dart';
 import 'package:flutter/material.dart';
 import 'dart:math';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:financial_calculator/screens/investmentTools/widgets/sip_summary_card.dart';
+
+import '../../database/db_helper.dart';
 
 class SipCalculator extends StatefulWidget {
   const SipCalculator({super.key});
@@ -219,7 +222,7 @@ class _SipCalculatorState extends State<SipCalculator> {
     "£": const Icon(Icons.currency_pound),
   };
 
-  void calculateSIP() {
+  void calculateSIP() async{
     final double? amount = double.tryParse(amountController.text);
     final double? rate = double.tryParse(rateController.text);
     final double? time = double.tryParse(timeController.text);
@@ -237,7 +240,18 @@ class _SipCalculatorState extends State<SipCalculator> {
       estimatedReturns = returns;
     });
 
+    await DBHelper.instance.insertDataSIP(
 
+        SIPCalculationData.fromMap({
+        "investment" : amount,
+        "time" : time,
+        "expected_returns" : rate,
+        "futureValue" : fv,
+      "totalInvested" : invested,
+      "estimatedReturns" : returns,
+      "type" : "SIP"
+      })
+    );
   }
 
   @override

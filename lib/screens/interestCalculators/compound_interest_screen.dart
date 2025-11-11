@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'dart:math';
 
 import '../../database/db_helper.dart';
-import '../../models/calculation.dart';
+import '../../models/interest_calculation.dart';
 import '../history/history_page.dart';
 
 

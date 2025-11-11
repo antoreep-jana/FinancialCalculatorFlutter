@@ -207,6 +207,9 @@ import 'dart:math';
 import 'package:intl/intl.dart';
 import 'package:financial_calculator/screens/investmentTools/widgets/lumpsum_summary_card.dart';
 
+import '../../database/db_helper.dart';
+import '../../models/lumpsum_calculation.dart';
+
 class LumpSumInvestmentPage extends StatefulWidget {
   const LumpSumInvestmentPage({super.key});
 
@@ -256,16 +259,26 @@ class _LumpSumInvestmentPageState extends State<LumpSumInvestmentPage> {
     super.dispose();
   }
 
-  void _onCalculate() {
+  void _onCalculate() async{
     if (_formKey.currentState!.validate()) {
-      double principal =
-      double.parse(_principalController.text.replaceAll(",", ""));
+      double principal = double.parse(_principalController.text.replaceAll(",", ""));
       double rate = double.parse(_rateController.text);
       double duration = double.parse(_durationController.text);
 
       setState(() {
         _futureValue = _calculateFutureValue(principal, rate, duration);
       });
+
+      await DBHelper.instance.insertDataLumpsum(
+        LumpsumData.fromMap({
+          'investment' : principal,
+          'returns' : rate,
+          'duration' : duration,
+          'futureValue' : _futureValue,
+          "type": "Lumpsum"
+        }),
+      );
+
     }
   }
 

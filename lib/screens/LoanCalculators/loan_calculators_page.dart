@@ -1,3 +1,4 @@
+import 'package:financial_calculator/models/EMI_calculation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:flutter_animate/flutter_animate.dart';
@@ -5,7 +6,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'dart:math';
 
 import '../../database/db_helper.dart';
-import '../../models/calculation.dart';
+import '../../models/interest_calculation.dart';
 
 // class LoanCalculatorsPage extends StatelessWidget {
 //   const LoanCalculatorsPage({Key? key}) : super(key: key);
@@ -256,6 +257,24 @@ class _LoanCalculatorScreenState extends State<LoanCalculatorScreen> {
       _totalRepayment = _monthlyPayment * months;
       _totalInterest = _totalRepayment - _loanAmount;
     });
+
+    try {
+      await DBHelper.instance.insertDataEMI(
+      EMIData.fromMap({
+        "amount" : _loanAmount,
+        "rate" : _interestRate / 100 / 12,
+        "months" : _loanTerm.toInt(),
+        "monthlyPayment" : _monthlyPayment,
+        "totalRepayment" : _totalRepayment,
+        "totalInterest" : _totalInterest,
+        'type' : "EMI"
+      })
+      );
+
+      print("Insertion successful");
+    } on Exception catch (e) {
+      print("Insertion failed : $e");
+    }
 
     // await DBHelper.instance.insertData(
     //   InterestData.fromMap({
